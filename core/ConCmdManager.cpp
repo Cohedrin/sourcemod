@@ -377,7 +377,10 @@ bool ConCmdManager::AddAdminCommand(IPluginFunction *pFunction,
 	/* Assign normal flags if there were no overrides */
 	if (!override)
 		pHook->admin->eflags = pHook->admin->flags;
-	pInfo->eflags = pHook->admin->eflags;
+
+	/* Only set the command's overall flags if it doesn't already require any */
+    if (pInfo->eflags == 0)
+		pInfo->eflags = pHook->admin->eflags;
 
 	cmdgroup->hooks.append(pHook);
 	pInfo->hooks.append(pHook);
